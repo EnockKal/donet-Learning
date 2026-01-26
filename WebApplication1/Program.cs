@@ -8,7 +8,14 @@ var app = builder.Build();
 
 app.UseHttpsRedirection();
 
-//Routing
+app.UseRouting();
+
+app.UseAuthentication();
+
+app.UseAuthorization();
+
+
+//Routing:
 
 // "/shirts"
 app.MapGet("/shirts", () =>
