@@ -1,6 +1,7 @@
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
@@ -18,29 +19,6 @@ app.UseAuthorization();
 //Routing:
 
 // "/shirts"
-app.MapGet("/shirts", () =>
-{
-    return "Reading all the shirts";
-});
-
-app.MapGet("/shirts/{id}", (int id) =>
-{
-    return $"Reading shirt with ID: {id}";
-});
-
-app.MapPost("/shirts", () =>
-{
-    return $"Creating a shirt";
-});
-
-app.MapPut("/shirts/{id}", (int id) =>
-{
-    return $"updating shirt: {id}";
-});
-
-app.MapDelete("/shirts/{id}", (int id) =>
-{
-    return $"Deleting short: {id}";
-});
+app.MapControllers();
 
 app.Run();
