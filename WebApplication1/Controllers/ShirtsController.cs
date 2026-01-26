@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
@@ -34,6 +35,28 @@ namespace WebApplication1.Controllers
         public string DeletetingShirt(int id)
         {
             return $"Updating shirt: {id}";
+        }
+
+        // Modeling Binding:
+        /* specifying where to get data from
+         * - [FromRoute]
+         * - [FromForm]
+         * -[FromBody]
+         * -[FromHeader(Name = "color")] 
+         * -[FromQuery]
+         * - ...
+         */
+
+        [HttpGet("{id}/{color}")]
+        public string GetShirtByIdAndColor(int id, [FromBody] string color)
+        {
+            return $"Reading all shirts: {id}";
+        }
+
+        [HttpPost]
+        public string CreateShirtFromBody([FromBody] Shirt shirt)
+        {
+            return $"Creating shirt";
         }
     }
 }
