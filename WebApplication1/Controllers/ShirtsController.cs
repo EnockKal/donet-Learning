@@ -19,11 +19,11 @@ namespace WebApplication1.Controllers
             return $"Reading all shirts: {id}";
         }
 
-        [HttpPost]
-        public string CreateShirt()
-        {
-            return $"Creating shirt";
-        }
+        //[HttpPost]
+        //public string CreateShirt()
+        //{
+        //    return $"Creating shirt";
+        //}
 
         [HttpPut("{id}")]
         public string UpdateShirt(int id)
