@@ -3,11 +3,11 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
+    [ApiController] // makes it a proper API controller (validation + smarter responses)
+    [Route("api/[controller]")] // auto uses controller name
     public class ShirtsController : ControllerBase
     {
-        [HttpGet]
+        [HttpGet] // maps to GET request
         public string GetShirt()
         {
             return "Reading all shirts";

@@ -5,7 +5,7 @@ builder.Services.AddControllers();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configure the HTTP request pipeline (middleware pipeline).
 
 app.UseHttpsRedirection();
 
@@ -18,7 +18,6 @@ app.UseAuthorization();
 
 //Routing:
 
-// "/shirts"
-app.MapControllers();
+app.MapControllers(); // enables controllers routing
 
-app.Run();
+app.Run(); // starts the server
