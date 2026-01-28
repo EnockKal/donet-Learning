@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebApplication1.Filters;
 using WebApplication1.Models;
 using WebApplication1.Models.Repository;
 
@@ -15,16 +16,10 @@ namespace WebApplication1.Controllers
         }
 
         [HttpGet("{id}")]
+        [Shirt_ValidateShirtIdFilte]
         public IActionResult GetShirtById(int id) // using IActionResult as return type to simplify dev process and good for Unit Testing,...
         {
-            if (id <= 0)
-                return BadRequest();
-
-            var shirt = ShirtsRepository.GetShirtById;
-            if (shirt == null)
-                return NotFound();
-
-            return Ok(shirt);
+            return Ok(ShirtsRepository.GetShirtById(id));
         }
 
         //[HttpPost]
