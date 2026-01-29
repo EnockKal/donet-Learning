@@ -12,7 +12,7 @@ namespace WebApplication1.Controllers
         [HttpGet] // maps to GET request
         public IActionResult GetShirt()
         {
-            return Ok("Reading all shirts");
+            return Ok(ShirtsRepository.GetShirts());
         }
 
         [HttpGet("{id}")]
