@@ -34,9 +34,23 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateShirt(int id)
+        [Shirt_ValidateShirtIdFilte]
+        [Shirt_ValidateShirtUpdateFilter]
+        public IActionResult UpdateShirt(int id, Shirt shirt)
         {
-            return Ok($"Updating shirt: {id}");
+            // in case someone delete shirt ight before the update is executed
+            try
+            {
+                ShirtsRepository.UpdateShirt(shirt);
+
+            }
+            catch (Exception)
+            {
+                if (!ShirtsRepository.ShirtExists(id)) return NotFound();
+
+                throw;
+            }
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
