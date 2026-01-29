@@ -22,11 +22,19 @@ namespace WebApplication1.Controllers
             return Ok(ShirtsRepository.GetShirtById(id));
         }
 
-        //[HttpPost]
-        //public string CreateShirt()
-        //{
-        //    return $"Creating shirt";
-        //}
+        [HttpPost]
+        public IActionResult CreateShirt([FromBody] Shirt shirt)
+        {
+            if (shirt == null) return BadRequest();
+
+            var existingShirt = ShirtsRepository.GetShirtByProperties(shirt.Brand, shirt.Gender, shirt.Color, shirt.Size);
+            if (existingShirt != null) return BadRequest();
+
+            ShirtsRepository.AddShirt(shirt);
+            return CreatedAtAction(nameof(GetShirtById),
+                new { id = shirt.ShirtId},
+                shirt);
+        }
 
         [HttpPut("{id}")]
         public IActionResult UpdateShirt(int id)
@@ -50,16 +58,10 @@ namespace WebApplication1.Controllers
          * - ...
          */
 
-        [HttpGet("{id}/{color}")]
-        public IActionResult GetShirtByIdAndColor(int id, [FromBody] string color)
-        {
-            return Ok($"Reading all shirts: {id}");
-        }
-
-        [HttpPost]
-        public IActionResult CreateShirtFromBody([FromBody] Shirt shirt)
-        {
-            return Ok($"Creating shirt");
-        }
+        //[HttpGet("{id}/{color}")]
+        //public IActionResult GetShirtByIdAndColor(int id, [FromBody] string color)
+        //{
+        //    return Ok($"Reading all shirts: {id}");
+        //}
     }
 }
