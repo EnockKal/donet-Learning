@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using WebApplication1.Models.Repository;
 
-namespace WebApplication1.Filters
+namespace WebApplication1.Filters.ActionFilters
 {
     public class Shirt_ValidateShirtIdFilteAttribute : ActionFilterAttribute
     {

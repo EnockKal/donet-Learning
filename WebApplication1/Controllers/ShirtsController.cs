@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebApplication1.Filters;
+using WebApplication1.Filters.ActionFilters;
+using WebApplication1.Filters.ExceptionFilters;
 using WebApplication1.Models;
 using WebApplication1.Models.Repository;
 
@@ -36,20 +37,11 @@ namespace WebApplication1.Controllers
         [HttpPut("{id}")]
         [Shirt_ValidateShirtIdFilte]
         [Shirt_ValidateShirtUpdateFilter]
+        [Shirt_HandleUpdateExeptionsFilter]
         public IActionResult UpdateShirt(int id, Shirt shirt)
         {
-            // in case someone delete shirt ight before the update is executed
-            try
-            {
-                ShirtsRepository.UpdateShirt(shirt);
+            ShirtsRepository.UpdateShirt(shirt);
 
-            }
-            catch (Exception)
-            {
-                if (!ShirtsRepository.ShirtExists(id)) return NotFound();
-
-                throw;
-            }
             return NoContent();
         }
 
