@@ -1,6 +1,6 @@
 ﻿namespace WebApplication1.Models.Repository
 {
-    public static class ShirtsRepository
+    public static class ShirtRepository
     {
         private static List<Shirt> shirts = new List<Shirt>()
         {
@@ -60,6 +60,15 @@
             shirtToUpdate.Price = shirt.Price;
             shirtToUpdate.Size = shirt.Size;
 
+        }
+
+        public static void DeleteShirt(int shirtId)
+        {
+            var shirt = GetShirtById(shirtId);
+            if (shirt != null)
+            {
+                shirts.Remove(shirt);
+            }
         }
     }
 }

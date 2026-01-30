@@ -15,7 +15,7 @@ namespace WebApplication1.Filters.ExceptionFilters
             if (int.TryParse(strShirtId, out int shirtId))
             {
                 // in case someone delete shirt before the update is executed
-                if (!ShirtsRepository.ShirtExists(shirtId))
+                if (!ShirtRepository.ShirtExists(shirtId))
                 {
                     context.ModelState.AddModelError("ShirtId", "Shirt doesn't exist anymore");
                     var problemDetails = new ValidationProblemDetails(context.ModelState)

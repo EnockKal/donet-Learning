@@ -13,21 +13,21 @@ namespace WebApplication1.Controllers
         [HttpGet] // maps to GET request
         public IActionResult GetShirt()
         {
-            return Ok(ShirtsRepository.GetShirts());
+            return Ok(ShirtRepository.GetShirts());
         }
 
         [HttpGet("{id}")]
         [Shirt_ValidateShirtIdFilte]
         public IActionResult GetShirtById(int id) // using IActionResult as return type to simplify dev process and good for Unit Testing,...
         {
-            return Ok(ShirtsRepository.GetShirtById(id));
+            return Ok(ShirtRepository.GetShirtById(id));
         }
 
         [HttpPost]
         [Shirt_ValidateShirtCreateFilter]
         public IActionResult CreateShirt([FromBody] Shirt shirt)
         {
-            ShirtsRepository.AddShirt(shirt);
+            ShirtRepository.AddShirt(shirt);
 
             return CreatedAtAction(nameof(GetShirtById),
                 new { id = shirt.ShirtId },
@@ -40,16 +40,25 @@ namespace WebApplication1.Controllers
         [Shirt_HandleUpdateExeptionsFilter]
         public IActionResult UpdateShirt(int id, Shirt shirt)
         {
-            ShirtsRepository.UpdateShirt(shirt);
+            ShirtRepository.UpdateShirt(shirt);
 
             return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeletetingShirt(int id)
+        [Shirt_ValidateShirtIdFilte]
+        public IActionResult DeleteShirt(int id)
         {
-            return Ok($"Updating shirt: {id}");
+            var shirt = ShirtRepository.GetShirtById(id);
+            ShirtRepository.DeleteShirt(id);
+
+            return Ok(shirt);
         }
+
+
+
+
+
 
         // Modeling Binding:
         /* specifying where to get data from

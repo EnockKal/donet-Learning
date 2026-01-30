@@ -22,7 +22,7 @@ namespace WebApplication1.Filters.ActionFilters
                     };
                     context.Result = new BadRequestObjectResult(problemDetails);
                 }
-                else if (!ShirtsRepository.ShirtExists(shirtId.Value))
+                else if (!ShirtRepository.ShirtExists(shirtId.Value))
                 {
                     context.ModelState.AddModelError("ShirtId", "Shirt doesn't exit");
                     var problemDetails = new ValidationProblemDetails(context.ModelState)

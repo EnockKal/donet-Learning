@@ -25,7 +25,7 @@ namespace WebApplication1.Filters.ActionFilters
             }
             else
             {
-                var existingShirt = ShirtsRepository.GetShirtByProperties(shirt.Brand, shirt.Gender, shirt.Color, shirt.Size);
+                var existingShirt = ShirtRepository.GetShirtByProperties(shirt.Brand, shirt.Gender, shirt.Color, shirt.Size);
                 if (existingShirt != null)
                 {
                     context.ModelState.AddModelError("Shirt", "Shirt already exist.");
