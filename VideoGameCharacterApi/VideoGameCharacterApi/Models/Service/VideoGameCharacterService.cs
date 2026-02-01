@@ -1,9 +1,18 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
+using VideoGameCharacterApi.Data;
+
 namespace VideoGameCharacterApi.Models.Service
 {
     public class VideoGameCharacterService : IVideoGameCharacterService
     {
-        // Temporary Data to work with
+        private readonly AppDbContext context;
+
+        public VideoGameCharacterService(AppDbContext context)
+        {
+            this.context = context;
+        }
+        // Data to work with
         static List<Character> character = new List<Character>
         {
             new Models.Character { Id = 1, Name = "Mario", Game = "Super Mario Bros", Role = "Hero"},
@@ -23,10 +32,10 @@ namespace VideoGameCharacterApi.Models.Service
         }
 
         public async Task<List<Character>> GetallCharactersAsync()
-            => await Task.FromResult(character);
+            => await context.Characters.ToListAsync();
 
         public async Task<Character?> GetCharacterByIdAsync(int id)
-            => await Task.FromResult(character.FirstOrDefault(x => x.Id == id));
+            => await context.Characters.FindAsync(id);
 
         public Task<bool> UpdateCharacterByNameAsync(int id, Character character)
         {
