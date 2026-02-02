@@ -5,28 +5,48 @@ using VideoGameCharacterApi.Dtos;
 
 namespace VideoGameCharacterApi.Models.Service
 {
-    public class VideoGameCharacterService : IVideoGameCharacterService
+    public class VideoGameCharacterService(AppDbContext context) : IVideoGameCharacterService
     {
-        private readonly AppDbContext context;
+        private readonly AppDbContext context = context;
 
-        public VideoGameCharacterService(AppDbContext context)
+        public async Task<CharacterResponse> AddChacterAsync(CreateCharacterRequest character)
         {
-            this.context = context;
+            var newCharacter = new Character
+            {
+                Name = character.Name,
+                Game = character.Game,
+                Role = character.Role
+            };
+
+            context.Characters.Add(newCharacter);
+            await context.SaveChangesAsync();
+
+            return new CharacterResponse
+            {
+                Id = newCharacter.Id,
+                Name = newCharacter.Name,
+                Game = newCharacter.Game,
+                Role = newCharacter.Role
+            };
         }
 
-        public Task<CharacterResponse> AddChacterByNameAsync(Character character)
+        public async Task<bool> DeleteCharacterByIdAsync(int id)
         {
-            throw new NotImplementedException();
-        }
+            var characterToDelete = await context.Characters.FirstOrDefaultAsync(c => c.Id == id);
 
-        public Task<bool> DeleteCharacterByIdAsync(int id)
-        {
-            throw new NotImplementedException();
+            if (characterToDelete is null)
+                return false;
+
+            context.Characters.Remove(characterToDelete);
+            await context.SaveChangesAsync();
+
+            return true;
         }
 
         public async Task<List<CharacterResponse>> GetallCharactersAsync()
             => await context.Characters.Select(c => new CharacterResponse
             {
+                Id = c.Id,
                 Name = c.Name,
                 Game = c.Game,
                 Role = c.Role
@@ -37,14 +57,24 @@ namespace VideoGameCharacterApi.Models.Service
                                     .Where(c => c.Id == id)
                                     .Select(c => new CharacterResponse
                                     {
+                                        Id = c.Id,
                                         Name = c.Name,
                                         Game = c.Game,
                                         Role = c.Role
                                     }).FirstOrDefaultAsync();
 
-        public Task<bool> UpdateCharacterByNameAsync(int id, Character character)
+        public async Task<bool> UpdateCharacterAsync(int id, UpdateCharacterRequest character)
         {
-            throw new NotImplementedException();
+            var ExistingCharacter = await context.Characters.FirstAsync(c => c.Id == id);
+            if (ExistingCharacter is null)
+                return false;
+
+            ExistingCharacter.Name = character.Name;
+            ExistingCharacter.Game = character.Game;
+            ExistingCharacter.Role = character.Role;
+
+            await context.SaveChangesAsync();
+            return true;
         }
     }
 }

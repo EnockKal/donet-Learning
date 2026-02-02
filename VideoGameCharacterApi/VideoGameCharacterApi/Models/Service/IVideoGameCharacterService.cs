@@ -8,9 +8,9 @@ namespace VideoGameCharacterApi.Models.Service
 
         Task<CharacterResponse?> GetCharacterByIdAsync(int id);
 
-        Task<CharacterResponse> AddChacterByNameAsync(Character character);
+        Task<CharacterResponse> AddChacterAsync(CreateCharacterRequest character);
 
-        Task<bool> UpdateCharacterByNameAsync(int id, Character character);
+        Task<bool> UpdateCharacterAsync(int id, UpdateCharacterRequest character);
 
         Task<bool> DeleteCharacterByIdAsync(int id);
     }
