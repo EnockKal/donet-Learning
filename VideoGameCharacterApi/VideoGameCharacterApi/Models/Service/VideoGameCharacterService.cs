@@ -7,8 +7,6 @@ namespace VideoGameCharacterApi.Models.Service
 {
     public class VideoGameCharacterService(AppDbContext context) : IVideoGameCharacterService
     {
-        private readonly AppDbContext context = context;
-
         public async Task<CharacterResponse> AddChacterAsync(CreateCharacterRequest character)
         {
             var newCharacter = new Character
