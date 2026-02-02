@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using VideoGameCharacterApi.Dtos;
 using VideoGameCharacterApi.Models;
 using VideoGameCharacterApi.Models.Service;
 
@@ -9,7 +10,7 @@ namespace VideoGameCharacterApi.Controllers
     public class VideoGameCharacterAPI(IVideoGameCharacterService service) : ControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult<Character>> GetCharacters()
+        public async Task<ActionResult<CharacterResponse>> GetCharacters()
             => Ok(await service.GetallCharactersAsync());
 
 
