@@ -13,5 +13,15 @@ namespace TaskManagementAPI.Models.Entities
         public TaskItemPriority Priority { get; set; }
 
         public DateTime? DueDate { get; set; }
+
+
+        // Link Project
+        public Project? Project { get; set; }
+        public int ProjectId { get; set; }
+
+
+        // Link User
+        public User? User { get; set; }
+        public int? UserId { get; set; }
     }
 }
