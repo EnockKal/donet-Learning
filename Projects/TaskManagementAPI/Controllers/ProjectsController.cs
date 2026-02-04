@@ -91,12 +91,17 @@ namespace TaskManagementAPI.Controllers
         public async Task<IActionResult> DeleteProject(int id)
         {
             var existingProject = await context.Projects.FindAsync(id);
-
             if (existingProject is null) return NotFound("There is no project with the given ID");
+
+            var existingTask = await context.TaskItems.AnyAsync(t => t.ProjectId == id);
+            if (existingTask)
+            {
+                return Conflict("Cannot delete project because it has associated tasks.");
+            }
 
             context.Projects.Remove(existingProject);
             await context.SaveChangesAsync();
-            
+
             return NoContent();
         }
     }
