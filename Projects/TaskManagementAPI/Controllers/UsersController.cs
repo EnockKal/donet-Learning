@@ -1,6 +1,11 @@
-﻿namespace TaskManagementAPI.Controllers
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace TaskManagementAPI.Controllers
 {
-    public class UsersController
+    [ApiController]
+    [Route("[Controller]")]
+    public class UsersController : ControllerBase
     {
+
     }
 }
