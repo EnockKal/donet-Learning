@@ -47,7 +47,7 @@ namespace TaskManagementAPI.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> CreateProject(CreateProjectRequestDTO project)
+        public async Task<IActionResult> CreateProject(ProjectRequestDTO project)
         {
             var newProject = new Project
             {
@@ -69,6 +69,35 @@ namespace TaskManagementAPI.Controllers
                 nameof(GetProjectById),
                 new { id = projectToReturn.Id },
                 projectToReturn);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateProject(ProjectRequestDTO project, int id)
+        {
+            var existingProject = await context.Projects.FindAsync(id);
+
+            if (existingProject is null) return NotFound("There is no project with the given ID");
+
+            if (string.IsNullOrWhiteSpace(project.ProjectName)) return BadRequest("No project Name was provided");
+            existingProject.ProjectName = project.ProjectName;
+            existingProject.Description = project.Description;
+
+            await context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteProject(int id)
+        {
+            var existingProject = await context.Projects.FindAsync(id);
+
+            if (existingProject is null) return NotFound("There is no project with the given ID");
+
+            context.Projects.Remove(existingProject);
+            await context.SaveChangesAsync();
+            
+            return NoContent();
         }
     }
 }
