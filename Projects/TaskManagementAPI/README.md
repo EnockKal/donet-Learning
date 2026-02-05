@@ -1,13 +1,15 @@
 # Task Management API
 
-A RESTful Task Management API built with ASP.NET Core and Entity Framework Core.  
-This project was created as part of my .NET learning journey, with a focus on clean architecture, relational data modeling, and real-world API design.
+A RESTful Task Management API built with ASP.NET Core and Entity Framework Core.
+
+This project is part of my .NET learning journey and focuses on building a real-world backend API with clean architecture, proper relational data modeling, and RESTful design practices.
 
 ---
 
 ## Overview
 
-The Task Management API allows managing projects and their associated tasks.  
+The Task Management API allows managing projects and their associated tasks.
+
 It demonstrates how to build a backend API from scratch using modern .NET practices, including:
 
 - ASP.NET Core Web API
@@ -16,6 +18,7 @@ It demonstrates how to build a backend API from scratch using modern .NET practi
 - Code-first migrations
 - Proper entity relationships
 - RESTful endpoints
+- Clean separation of concerns
 
 ---
 
@@ -31,22 +34,34 @@ It demonstrates how to build a backend API from scratch using modern .NET practi
 
 ## Domain Model
 
-**Project**
+### Project
 - Id
 - Name
 - Description
+- CreatedAt
 - Collection of TaskItems
 
-**TaskItem**
+### TaskItem
 - Id
 - Title
 - Description
 - Status
+- Priority
+- DueDate
 - ProjectId (FK)
+- UserId (nullable FK)
 
-Relationships:
+### User
+- Id
+- Name
+- Email
+- Collection of TaskItems
+
+### Relationships
 - One Project → Many TaskItems
-- TaskItems belong to a single Project
+- TaskItem belongs to exactly one Project
+- TaskItem can optionally be assigned to one User
+- One User → Many TaskItems
 
 Entity relationships are configured using Fluent API.
 
@@ -54,16 +69,43 @@ Entity relationships are configured using Fluent API.
 
 ## Features
 
-- Create, read, update, and delete projects
-- Create, read, update, and delete tasks
+### Projects
+- Create project
+- Get all projects
+- Get project by id
+- Update project
+- Delete project
+
+### Tasks
+- Create task under a project
+- Get all tasks
+- Get task by id
+- Get all tasks for a specific project
+- Update task
+- Delete task
 - Tasks are always associated with a project
+
+### General
 - Proper use of HTTP status codes
+- DTO-based request and response models
 - Database migrations with EF Core
 - Swagger UI for API testing
 
 ---
 
+## Current Progress
+
+- Projects CRUD ✅
+- Tasks CRUD ✅
+- Get tasks by project ✅
+- Task assignment 🔄 In progress
+- User management ⏳ Planned
+
+---
+
 ## Project Structure
+
+<img width="491" height="587" alt="image" src="https://github.com/user-attachments/assets/493face8-5291-4bfc-8ff1-c74e356a3cef" />
 
 TaskManagementAPI/
 │
@@ -101,20 +143,23 @@ https://localhost:{port}/swagger
 - Handling common EF Core and routing issues
 - Debugging migrations and connection problems
 - Structuring a backend project cleanly
+- Proper use of DTOs and HTTP responses
 
 ---
 
 ## Notes
 
-This project is part of a larger `.NET Learning` repository.  
-The goal is learning, experimentation, and building strong backend fundamentals rather than production deployment.
+This project is part of a larger **.NET learning repository**.
+The goal is to strengthen backend fundamentals and understand how real-world APIs are designed, rather than focusing on production deployment.
 
 ---
 
 ## Next Improvements
 
-- Add DTOs and AutoMapper
+- Complete task assignment feature
+- Add full user management
 - Add validation (FluentValidation)
 - Add authentication and authorization (JWT)
 - Add pagination and filtering
 - Add unit tests
+- Introduce AutoMapper
