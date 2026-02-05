@@ -7,7 +7,7 @@ using TaskManagementAPI.Models.Entities;
 namespace TaskManagementAPI.Controllers
 {
     [ApiController]
-    [Route("api/[Controller]")]
+    [Route("api/[controller]")]
     public class ProjectsController(AppDbContext context) : ControllerBase
     {
         [HttpGet]
@@ -37,7 +37,7 @@ namespace TaskManagementAPI.Controllers
                     Description = p.Description,
                     CreatedAt = p.CreatedAt
                 })
-                .SingleOrDefaultAsync(p => p.Id == id);
+                .SingleOrDefaultAsync();
 
             if (projectToGet == null)
                 return NotFound();

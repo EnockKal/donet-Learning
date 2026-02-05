@@ -1,6 +1,6 @@
 ﻿namespace TaskManagementAPI.Models.Entities.Enums
 {
-    public enum TaskItemStatus
+    public enum TaskStatus
     {
         Todo = 0,
         InProgress = 1,
