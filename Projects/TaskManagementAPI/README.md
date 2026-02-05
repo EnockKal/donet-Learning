@@ -105,8 +105,6 @@ Entity relationships are configured using Fluent API.
 
 ## Project Structure
 
-<img width="491" height="587" alt="image" src="https://github.com/user-attachments/assets/493face8-5291-4bfc-8ff1-c74e356a3cef" />
-
 TaskManagementAPI/
 │
 ├── Controllers/ # API controllers
