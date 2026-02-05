@@ -76,7 +76,7 @@ namespace TaskManagementAPI.Controllers
         {
             var existingProject = await context.Projects.FindAsync(id);
 
-            if (existingProject is null) return NotFound("There is no project with the given ID");
+            if (existingProject is null) return NotFound($"There is no Project with {id} as ID");
 
             if (string.IsNullOrWhiteSpace(project.ProjectName)) return BadRequest("No project Name was provided");
             existingProject.ProjectName = project.ProjectName;
@@ -91,7 +91,7 @@ namespace TaskManagementAPI.Controllers
         public async Task<IActionResult> DeleteProject(int id)
         {
             var existingProject = await context.Projects.FindAsync(id);
-            if (existingProject is null) return NotFound("There is no project with the given ID");
+            if (existingProject is null) return NotFound($"There is no Project with {id} as ID");
 
             var existingTask = await context.TaskItems.AnyAsync(t => t.ProjectId == id);
             if (existingTask)

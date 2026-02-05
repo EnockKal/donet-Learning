@@ -113,7 +113,7 @@ namespace TaskManagementAPI.Controllers
         public async Task<IActionResult> UpdateTask(int id, TaskRequestDTO task)
         {
             var TaskToUpdate = await context.TaskItems.FindAsync(id);
-            if (TaskToUpdate is null) { return NotFound("There is no Task with the given ID"); }
+            if (TaskToUpdate is null) { return NotFound($"There is no Task with {id} as ID"); }
 
             if (string.IsNullOrWhiteSpace(task.Title)) { return BadRequest("No Title was provided"); }
             TaskToUpdate.Title = task.Title;
@@ -131,7 +131,7 @@ namespace TaskManagementAPI.Controllers
         public async Task<IActionResult> DeleteTask(int id)
         {
             var TaskToDelete = await context.TaskItems.FindAsync(id);
-            if (TaskToDelete is null) { return NotFound("There is no Task with the given ID"); }
+            if (TaskToDelete is null) { return NotFound($"There is no Task with {id} as ID"); }
 
             context.TaskItems.Remove(TaskToDelete);
             await context.SaveChangesAsync();
