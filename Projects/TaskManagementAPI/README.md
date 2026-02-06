@@ -1,8 +1,8 @@
 # Task Management API
 
-A RESTful Task Management API built with ASP.NET Core and Entity Framework Core.
+A production‑style RESTful backend API built with ASP.NET Core and Entity Framework Core. This project was developed as a hands‑on learning and portfolio project to demonstrate clean API design, correct relational data modeling, and real‑world backend patterns.
 
-This project is part of my .NET learning journey and focuses on building a real-world backend API with clean architecture, proper relational data modeling, and RESTful design practices.
+This API manages Projects, Tasks, and Users, with full CRUD operations, task assignment logic, and safe deletion handling using proper foreign‑key constraints.
 
 ---
 
@@ -34,56 +34,52 @@ It demonstrates how to build a backend API from scratch using modern .NET practi
 
 ## Domain Model
 
-### Project
-- Id
-- Name
-- Description
-- CreatedAt
-- Collection of TaskItems
+### Projects
+- Create, update, delete projects
+- Get all projects or a project by id
+- One‑to‑many relationship: Project → TaskItems
+- Restrictive delete behavior to protect related tasks
 
-### TaskItem
-- Id
-- Title
-- Description
-- Status
-- Priority
-- DueDate
-- ProjectId (FK)
-- UserId (nullable FK)
+### Tasks (TaskItem)
+- Create tasks under a project
+- Get all tasks or tasks by project
+- Get task by id
+- Update task details (title, description, status, priority, due date)
+- Delete tasks
+- Task status and priority implemented using enums
 
-### User
-- Id
-- Name
-- Email
-- Collection of TaskItems
+### Users
+- Create users
+- Get all users or user by id
+- Update user information
+- Delete users with safe foreign‑key handling
 
-### Relationships
-- One Project → Many TaskItems
-- TaskItem belongs to exactly one Project
-- TaskItem can optionally be assigned to one User
-- One User → Many TaskItems
+### Task Assignment
+- Assign a task to a user
+- Reassign a task to another user
+- Unassign a task from a user
+- Retrieve tasks assigned to a specific user
+
+### Data Modeling Relationships
+- One Project → Many TaskItems: One‑to‑Many (required)
+- One User → Many TaskItems One‑to‑Many (optional)
+- Tasks can exist without an assigned user
+- Task belongs to exactly one Project
+- Task can optionally be assigned to one User
 
 Entity relationships are configured using Fluent API.
 
+### Delete User Logic (Foreign‑Key Safe)
+When deleting a user:
+
+1. The API checks if the user exists
+2. It checks whether the user has assigned tasks
+3. If tasks exist, they are automatically unassigned (`UserId = null`)
+4. The user is then deleted
+
+This approach preserves task data while respecting database constraints.
+
 ---
-
-## Features
-
-### Projects
-- Create project
-- Get all projects
-- Get project by id
-- Update project
-- Delete project
-
-### Tasks
-- Create task under a project
-- Get all tasks
-- Get task by id
-- Get all tasks for a specific project
-- Update task
-- Delete task
-- Tasks are always associated with a project
 
 ### General
 - Proper use of HTTP status codes
@@ -95,11 +91,34 @@ Entity relationships are configured using Fluent API.
 
 ## Current Progress
 
-- Projects CRUD ✅
-- Tasks CRUD ✅
-- Get tasks by project ✅
-- Task assignment 🔄 In progress
-- User management ⏳ Planned
+✅ **Completed**
+
+This project meets the minimum scope for a resume-ready backend API and demonstrates strong fundamentals in ASP.NET Core and Entity Framework Core.
+
+---
+
+## What I Practiced and Learned
+
+- Designing RESTful APIs in ASP.NET Core
+- Using Entity Framework Core with SQL Server
+- Modeling one-to-many relationships correctly
+- Fluent API vs Data Annotations
+- Handling foreign key constraints safely
+- Implementing task assignment logic
+- Debugging EF Core migrations and connection issues
+- Structuring a backend project cleanly
+- Proper use of DTOs and HTTP responses
+
+---
+
+## Possible Next Improvements
+
+- Add validation (FluentValidation)
+- JWT authentication and authorization
+- Pagination and filtering
+- Unit and integration tests (xUnit)
+- Frontend integration using React + TypeScript
+- Introduce AutoMapper
 
 ---
 
@@ -117,6 +136,13 @@ TaskManagementAPI/
 
 ---
 
+## Notes
+
+This project is part of a larger **.NET learning repository**.
+The goal is to strengthen backend fundamentals and understand how real-world APIs are designed, rather than focusing on production deployment.
+
+---
+
 ## How to Run Locally
 
 1. Clone the repository
@@ -129,35 +155,3 @@ Update-Database
 6. Open Swagger at:
 https://localhost:{port}/swagger
 
-
----
-
-## What I Practiced and Learned
-
-- Designing RESTful APIs in ASP.NET Core
-- Using Entity Framework Core with SQL Server
-- Modeling one-to-many relationships correctly
-- Fluent API vs Data Annotations
-- Handling common EF Core and routing issues
-- Debugging migrations and connection problems
-- Structuring a backend project cleanly
-- Proper use of DTOs and HTTP responses
-
----
-
-## Notes
-
-This project is part of a larger **.NET learning repository**.
-The goal is to strengthen backend fundamentals and understand how real-world APIs are designed, rather than focusing on production deployment.
-
----
-
-## Next Improvements
-
-- Complete task assignment feature
-- Add full user management
-- Add validation (FluentValidation)
-- Add authentication and authorization (JWT)
-- Add pagination and filtering
-- Add unit tests
-- Introduce AutoMapper
