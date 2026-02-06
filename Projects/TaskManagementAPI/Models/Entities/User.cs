@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace TaskManagementAPI.Models.Entities
+﻿namespace TaskManagementAPI.Models.Entities
 {
     public class User
     {

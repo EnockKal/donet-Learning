@@ -76,6 +76,7 @@ namespace TaskManagementAPI.Controllers
             return Ok(users);
         }
 
+
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, UserRequestDTO user)
         {
@@ -90,6 +91,35 @@ namespace TaskManagementAPI.Controllers
             existingUser.FullName = user.FullName;
             existingUser.Email = user.Email;
 
+            await context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            var existingUser = await context.Users.FindAsync(id);
+
+            if (existingUser == null) return NotFound($"User with id {id} was not found.");
+
+            var userHasTasks = await context.TaskItems.AnyAsync(t => t.UserId == id);
+
+            if (userHasTasks)
+            {
+                var tasks = await context.TaskItems
+                    .Where(t => t.UserId == id)
+                    .ToListAsync();
+
+                foreach (var task in tasks)
+                {
+                    task.UserId = null;
+                }
+                await context.SaveChangesAsync();
+            }
+
+            context.Users.Remove(existingUser);
             await context.SaveChangesAsync();
 
             return NoContent();
