@@ -40,7 +40,7 @@ namespace TaskManagementAPI.Controllers
                 .SingleOrDefaultAsync();
 
             if (projectToGet == null)
-                return NotFound();
+                return NotFound("$There is no Project with {id} as ID");
 
             return Ok(projectToGet);
         }
